@@ -5,10 +5,10 @@ This is adapted version of the Node-RED pythonshell [example](https://flows.node
 
 Required software for this example (try getting the latest versions):
 - [Node-RED](https://nodered.org) and [python3](https://www.python.org)
-- pylogix and pycomm3 will be installed by the flow (internet connection required until installed)
+- pylogix and pycomm3 will be installed by the flow (internet connection will be required until installed)
 
 Required additional Node-RED packages (use "Manage Palette" option from within Node-RED to install, internet connection required until installed):
-- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard), [node-red-contrib-pythonshell](https://flows.nodered.org/node/node-red-contrib-pythonshell), [node-red-contrib-ui-artless-gauge](https://flows.nodered.org/node/node-red-contrib-ui-artless-gauge)
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard) ; [node-red-contrib-pythonshell](https://flows.nodered.org/node/node-red-contrib-pythonshell) ; [node-red-contrib-ui-artless-gauge](https://flows.nodered.org/node/node-red-contrib-ui-artless-gauge)
 
 Optionally install any other Node-RED packages (like [ui_level](https://flows.nodered.org/node/node-red-contrib-ui-level), [lineargauge](https://flows.nodered.org/node/node-red-node-ui-lineargauge), ... etc).
 
@@ -41,7 +41,7 @@ All the credits go to Node-RED, its contributors and in particular [rodened](htt
 Any and all trademarks, either directly or indirectly mentioned in this project, belong to their respective owners.
 
 # Useful Resources
-Any and all Node-RED Library nodes. Some specifically PLC related packages:
+Some Node-RED Library nodes specifically related to PLCs:
 - [OpenPLC](https://flows.nodered.org/node/node-red-contrib-openplc)
 - [redPlc](https://flows.nodered.org/node/node-red-contrib-redplc)
 - [plcindustry](https://flows.nodered.org/node/plcindustry)
