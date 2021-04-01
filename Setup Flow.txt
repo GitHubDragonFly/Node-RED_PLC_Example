@@ -1,0 +1,1302 @@
+[
+    {
+        "id": "d10819f1.5cfcf8",
+        "type": "tab",
+        "label": "example create python env and install packages",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7809963d.05f3c8",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "53616424.606c6c",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "4678729b.3b0a8c",
+        "type": "ui_group",
+        "name": "Pylogix/Pycomm3 Dashboard",
+        "tab": "7809963d.05f3c8",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "2f245282.d1a01e",
+        "type": "ui_group",
+        "name": "Devices & Tags Lists",
+        "tab": "7809963d.05f3c8",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "4c88e585.8e1f24",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1378,
+        "wires": [
+            [
+                "50ba691d.64c14"
+            ]
+        ]
+    },
+    {
+        "id": "618e1a71.b75bec",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "read.py",
+        "filename": "read.py",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 500,
+        "y": 1378,
+        "wires": [
+            [
+                "ce48c0ed.50038"
+            ]
+        ]
+    },
+    {
+        "id": "50ba691d.64c14",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "import sys\nsys.path.append('..')\n\nfrom pylogix import PLC\n\ndef read_value(tagName):\n    readValue = ''\n    response = None\n\n    comm = PLC()\n    comm.IPAddress = '192.168.1.15'\n    comm.ProcessorSlot = 3\n    comm.Micro800 = False\n\n    try:\n        response = comm.Read(tagName)\n    except:\n        pass\n\n    comm.Close()\n    \n    if not response.Value is None:\n        readValue = response.Value\n    else:\n        readValue = response.Status\n\n    print(readValue)\n\n    return readValue\n\ntag = input()\nread_value(tag)",
+        "output": "str",
+        "x": 300,
+        "y": 1378,
+        "wires": [
+            [
+                "618e1a71.b75bec"
+            ]
+        ]
+    },
+    {
+        "id": "32f3e5be.c6d1ea",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Create a python script file for reading tags and save to disk.\\n Modify the IP and Processor Slot to match your PLC (pylogix).",
+        "info": "",
+        "x": 380,
+        "y": 1302,
+        "wires": []
+    },
+    {
+        "id": "710ad20b.6eecbc",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 81,
+        "wires": [
+            [
+                "20238ec4.356b4a"
+            ]
+        ]
+    },
+    {
+        "id": "20238ec4.356b4a",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "#!/bin/bash \n\nls -l\npython3 -m venv envtest\nsource envtest/bin/activate\nls -l\nwhich python",
+        "output": "str",
+        "x": 300,
+        "y": 81,
+        "wires": [
+            [
+                "48e4cbe6.663c74"
+            ]
+        ]
+    },
+    {
+        "id": "e6f96d6f.84ad5",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 101,
+        "y": 200,
+        "wires": [
+            [
+                "5aac71f6.75fa6"
+            ]
+        ]
+    },
+    {
+        "id": "5aac71f6.75fa6",
+        "type": "exec",
+        "z": "d10819f1.5cfcf8",
+        "command": "chmod u+x create_env.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "make create_env.sh file executable",
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "2bbfdb22.fce40c"
+            ],
+            [
+                "2bbfdb22.fce40c"
+            ],
+            [
+                "2bbfdb22.fce40c"
+            ]
+        ]
+    },
+    {
+        "id": "2bbfdb22.fce40c",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "df88c65f.b916e",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 320,
+        "wires": [
+            [
+                "e1217437.c2f28"
+            ]
+        ]
+    },
+    {
+        "id": "e1217437.c2f28",
+        "type": "exec",
+        "z": "d10819f1.5cfcf8",
+        "command": "bash create_env.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "oldrc": false,
+        "name": "execute create_env.sh",
+        "x": 338,
+        "y": 320,
+        "wires": [
+            [
+                "d1f3797b.4e1fc"
+            ],
+            [
+                "d1f3797b.4e1fc"
+            ],
+            [
+                "d1f3797b.4e1fc"
+            ]
+        ]
+    },
+    {
+        "id": "d1f3797b.4e1fc",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d6fe5891.d33b58",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 539,
+        "wires": [
+            [
+                "c78e19c9.c52fe8"
+            ]
+        ]
+    },
+    {
+        "id": "c78e19c9.c52fe8",
+        "type": "exec",
+        "z": "d10819f1.5cfcf8",
+        "command": "chmod u+x install_packages.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "oldrc": false,
+        "name": "make install_packages.sh file executable",
+        "x": 400,
+        "y": 539,
+        "wires": [
+            [
+                "ae0e34ca.343018"
+            ],
+            [
+                "ae0e34ca.343018"
+            ],
+            [
+                "ae0e34ca.343018"
+            ]
+        ]
+    },
+    {
+        "id": "ae0e34ca.343018",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 769,
+        "y": 539,
+        "wires": []
+    },
+    {
+        "id": "f1e8fc10.c291",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 660,
+        "wires": [
+            [
+                "bdf794d0.ec644"
+            ]
+        ]
+    },
+    {
+        "id": "bdf794d0.ec644",
+        "type": "exec",
+        "z": "d10819f1.5cfcf8",
+        "command": "bash install_packages.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "oldrc": false,
+        "name": "execute install_packages.sh",
+        "x": 360,
+        "y": 660,
+        "wires": [
+            [
+                "4798673d.cd13e"
+            ],
+            [
+                "4798673d.cd13e"
+            ],
+            [
+                "4798673d.cd13e"
+            ]
+        ]
+    },
+    {
+        "id": "4798673d.cd13e",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 771,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "f58cb0c.666ba5",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Create bash file that creates and activates venv.",
+        "info": "In the template node we create a bash file that will create a virtual python environment and activate the environment.\n\n#!/bin/bash \n\ncd /data\nls -l\npython3 -m venv envtest\nsource envtest/bin/activate\nls -l\nwhich python",
+        "x": 340,
+        "y": 24,
+        "wires": []
+    },
+    {
+        "id": "27348f56.3a5a5",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Make the bash file executable.",
+        "info": "",
+        "x": 280,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a4cfafdb.4acbb8",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Make the bash file executable.",
+        "info": "",
+        "x": 280,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1472d1a0.27d976",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Execute the bash file to create venv.",
+        "info": "",
+        "x": 300,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "49d40ee6.d4c45",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 424,
+        "wires": [
+            [
+                "384a2aa1.763856"
+            ]
+        ]
+    },
+    {
+        "id": "788a8d2.6bcc074",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "filename": "install_packages.sh",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 551,
+        "y": 424,
+        "wires": [
+            [
+                "2ac49759.ea29d"
+            ]
+        ]
+    },
+    {
+        "id": "384a2aa1.763856",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "#!/bin/bash \n\nsource envtest/bin/activate\nls -l\nwhich python\npip3 install pylogix pycomm3",
+        "output": "str",
+        "x": 300,
+        "y": 424,
+        "wires": [
+            [
+                "788a8d2.6bcc074"
+            ]
+        ]
+    },
+    {
+        "id": "35dbbd9a.1a9302",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Create bash file that installs pylogix, pycomm3 packages (internet connection required).",
+        "info": "",
+        "x": 460,
+        "y": 379,
+        "wires": []
+    },
+    {
+        "id": "3015626b.473dee",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Execute the bash file to install pylogix, pycomm3 packages.",
+        "info": "",
+        "x": 370,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "cd451423.55fe",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Inject a tag to the python script and display its value in the debug window.\\n Optionally, automate injection with the 'Inject once after' and Repeat.\\n Modify the IP and Processor Slot to match your PLC.",
+        "info": "",
+        "x": 420,
+        "y": 1478,
+        "wires": []
+    },
+    {
+        "id": "ce48c0ed.50038",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 1378,
+        "wires": []
+    },
+    {
+        "id": "525e5365.55b2d4",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "Read Tag",
+        "pyfile": "read.py",
+        "virtualenv": "envtest",
+        "continuous": true,
+        "stdInData": true,
+        "x": 421,
+        "y": 1567,
+        "wires": [
+            [
+                "6877901.4e52f7",
+                "c4329394.c99068"
+            ]
+        ]
+    },
+    {
+        "id": "17c1d267.99f34e",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 81,
+        "wires": []
+    },
+    {
+        "id": "14aa3689.f74379",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "CT_DINT",
+        "payloadType": "str",
+        "x": 96,
+        "y": 1567,
+        "wires": [
+            [
+                "525e5365.55b2d4"
+            ]
+        ]
+    },
+    {
+        "id": "ae05e7f2.d7315",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "CT_REAL",
+        "payloadType": "str",
+        "x": 100,
+        "y": 1767,
+        "wires": [
+            [
+                "9cb6db27.08f0f"
+            ]
+        ]
+    },
+    {
+        "id": "ddfc7edb.033248",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "CT_STRING",
+        "payloadType": "str",
+        "x": 110,
+        "y": 1667,
+        "wires": [
+            [
+                "6de6adb.56fb0d4"
+            ]
+        ]
+    },
+    {
+        "id": "2ac49759.ea29d",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 769,
+        "y": 424,
+        "wires": []
+    },
+    {
+        "id": "9cb6db27.08f0f",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "Read Tag",
+        "pyfile": "read.py",
+        "virtualenv": "envtest",
+        "continuous": true,
+        "stdInData": true,
+        "x": 423,
+        "y": 1767,
+        "wires": [
+            [
+                "73e0f96f.ef1fb8",
+                "738152dd.c63db4"
+            ]
+        ]
+    },
+    {
+        "id": "6de6adb.56fb0d4",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "Read Tag",
+        "pyfile": "read.py",
+        "virtualenv": "envtest",
+        "continuous": true,
+        "stdInData": true,
+        "x": 421,
+        "y": 1667,
+        "wires": [
+            [
+                "f76374d2.33c5c8",
+                "ea88923.28052f"
+            ]
+        ]
+    },
+    {
+        "id": "f76374d2.33c5c8",
+        "type": "ui_text",
+        "z": "d10819f1.5cfcf8",
+        "group": "4678729b.3b0a8c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "CT_STRING = ",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 779,
+        "y": 1667,
+        "wires": []
+    },
+    {
+        "id": "73e0f96f.ef1fb8",
+        "type": "ui_gauge",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "group": "4678729b.3b0a8c",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "gtype": "gage",
+        "title": "CT_REAL",
+        "label": "",
+        "format": "{{value}}",
+        "min": "-100",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 761,
+        "y": 1767,
+        "wires": []
+    },
+    {
+        "id": "6877901.4e52f7",
+        "type": "ui_artlessgauge",
+        "z": "d10819f1.5cfcf8",
+        "group": "4678729b.3b0a8c",
+        "order": 2,
+        "width": "6",
+        "height": "6",
+        "name": "CT_DINT",
+        "icon": "",
+        "label": "CT_DINT",
+        "unit": "",
+        "layout": "radial",
+        "decimals": 0,
+        "differential": false,
+        "minmax": true,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "payload",
+        "secondary": "secondary",
+        "inline": false,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#00ff00",
+                "t": "min",
+                "dot": 2
+            },
+            {
+                "val": 2147483647,
+                "col": "#00ff00",
+                "t": "max",
+                "dot": 2
+            }
+        ],
+        "lineWidth": 3,
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 756,
+        "y": 1569,
+        "wires": []
+    },
+    {
+        "id": "48e4cbe6.663c74",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "filename": "create_env.sh",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 560,
+        "y": 81,
+        "wires": [
+            [
+                "17c1d267.99f34e"
+            ]
+        ]
+    },
+    {
+        "id": "c4329394.c99068",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 769,
+        "y": 1607,
+        "wires": []
+    },
+    {
+        "id": "ea88923.28052f",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 769,
+        "y": 1707,
+        "wires": []
+    },
+    {
+        "id": "738152dd.c63db4",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 769,
+        "y": 1807,
+        "wires": []
+    },
+    {
+        "id": "f70f19a2.007cc8",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 790,
+        "wires": [
+            [
+                "f3a371ff.c7c768"
+            ]
+        ]
+    },
+    {
+        "id": "14453ff2.4958b8",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "devices.py",
+        "filename": "devices.py",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 510,
+        "y": 790,
+        "wires": [
+            [
+                "e73afaf5.df6d28"
+            ]
+        ]
+    },
+    {
+        "id": "f3a371ff.c7c768",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "mustache",
+        "template": "from pycomm3 import LogixDriver\n\ndef discoverDevices():\n    path = '192.168.1.15'\n    commDD = None\n    devicesList = ''\n\n    try:\n        commDD = LogixDriver(path)\n        commDD.open()\n        \n        if commDD.connected:\n            devices = commDD.discover()\n\n            if str(devices) == '[]':\n                devicesList += 'No Devices Discovered'\n            else:\n                for device in devices:\n                    devicesList += 'IP Address: ' + device['ip_address'] + '\\n'\n                    devicesList += 'Vendor: ' + device['vendor'] + '\\n'\n                    devicesList += 'Product Name: ' + device['product_name'] + '\\n'\n                    devicesList += 'Product Code: ' + str(device['product_code']) + '\\n'\n                    devicesList += 'Revision: ' +  str(device['revision']['major']) + '.' + str(device['revision']['minor']) + '\\n'\n                    devicesList += 'Serial: ' + str(int(device['serial'], 16)) + '\\n'\n                    devicesList += 'State: ' + str(device['state']) + '\\n'\n                    devicesList += 'Status: ' + str(int.from_bytes(device['status'], byteorder='little')) + '\\n'\n                    devicesList += '----------------------------------' + '\\n'\n        else:\n            devicesList += 'No Devices Discovered'\n\n        commDD.close()\n        commDD = None\n    except Exception as e:\n        devicesList += 'No Devices Discovered'\n        if not commDD is None:\n            commDD.close()\n            commDD = None\n    \n    print(devicesList)\n    return devicesList\n\ndiscoverDevices()",
+        "output": "str",
+        "x": 300,
+        "y": 790,
+        "wires": [
+            [
+                "14453ff2.4958b8"
+            ]
+        ]
+    },
+    {
+        "id": "dc8a9f69.51a73",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Create a python script file for device discovery and save to disk.\\n Modify the path to match your network (pycomm3).",
+        "info": "",
+        "x": 390,
+        "y": 727,
+        "wires": []
+    },
+    {
+        "id": "e73afaf5.df6d28",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 790,
+        "wires": []
+    },
+    {
+        "id": "d842ebce.d7d508",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Execute the script to discover devices.",
+        "info": "",
+        "x": 309.0833282470703,
+        "y": 849.75,
+        "wires": []
+    },
+    {
+        "id": "63dd2e71.9eb67",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 906,
+        "wires": [
+            [
+                "f23e7cc8.0de17"
+            ]
+        ]
+    },
+    {
+        "id": "f23e7cc8.0de17",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "Discover Devices",
+        "pyfile": "devices.py",
+        "virtualenv": "envtest",
+        "continuous": false,
+        "stdInData": false,
+        "x": 428,
+        "y": 906,
+        "wires": [
+            [
+                "30f40a86.fc5e9e",
+                "87d65118.f1983"
+            ]
+        ]
+    },
+    {
+        "id": "87d65118.f1983",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 768,
+        "y": 945,
+        "wires": []
+    },
+    {
+        "id": "30f40a86.fc5e9e",
+        "type": "ui_template",
+        "z": "d10819f1.5cfcf8",
+        "group": "2f245282.d1a01e",
+        "name": "",
+        "order": 0,
+        "width": "6",
+        "height": "4",
+        "format": "<style>\n    #myDevices {\n        min-height: 300px;\n        padding: 0;\n        white-space: pre;\n    }\n</style>\n\n<div id=\"myDevices\" ng-bind=\"msg.payload\" contenteditable=\"false\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 760,
+        "y": 906,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d67a360.a4a5c4",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1082,
+        "wires": [
+            [
+                "c395faf4.dea2a8"
+            ]
+        ]
+    },
+    {
+        "id": "513160a2.a4c83",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "tags.py",
+        "filename": "tags.py",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 500,
+        "y": 1082,
+        "wires": [
+            [
+                "a294b600.af3258"
+            ]
+        ]
+    },
+    {
+        "id": "c395faf4.dea2a8",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "mustache",
+        "template": "from pycomm3 import LogixDriver\n\ndef getTags():\n    global tagsList\n\n    path = '192.168.1.15/3'\n    commGT = None\n    tagsList = ''\n\n    try:\n        commGT = LogixDriver(path)\n        commGT.open()\n\n        tags = commGT.get_tag_list('*') #get all tags\n\n        if not tags is None:\n            j = 1\n\n            for tag, _def in commGT.tags.items():\n                #-----------------------------------------------------------------------\n                # Extract dimensions and format them for displaying\n                #-----------------------------------------------------------------------\n\n                dimensions = ''\n                dim = _def['dim']\n\n                if dim != 0:\n                    dims = str(_def['dimensions'])[1:-1].split(',')\n\n                    if dim == 1:\n                        if _def['data_type'] == 'DWORD':\n                            dimensions = '[' + str(int(dims[0]) * 32) + ']'\n                        else:\n                            dimensions = '[' + dims[0] + ']'\n                    elif dim == 2:\n                        dimensions = '[' + dims[0] + ',' + dims[1] + ']'\n                    else:\n                        dimensions = '[' + dims[0] + ',' + dims[1] + ',' + dims[2] + ']'\n\n                #-----------------------------------------------------------------------\n                # If structure then process this and all subsequent structures\n                #-----------------------------------------------------------------------\n\n                if _def['tag_type'] == 'struct':\n                    structureDataType = _def['data_type']['name']\n                    structureSize = _def['data_type']['template']['structure_size']\n                    \n                    tagsList += tag + dimensions + ' (' + structureDataType + ') ' + str(structureSize) + ' bytes' + '\\n'\n\n                    struct_members(_def['data_type']['internal_tags'], j)\n                else:\n                    tagsList += tag + dimensions + ' (' + _def['data_type'] + ')' + '\\n'\n\n                #-----------------------------------------------------------------------\n\n                j = 1\n        else:\n            tagsList += 'No Tags Retrieved'\n\n        commGT.close()\n        commGT = None\n    except Exception as e:\n        tagsList += 'No Tags Retrieved'\n        if not commGT is None:\n            commGT.close()\n            commGT = None\n    \n    print(tagsList)\n    return tagsList\n\ndef struct_members(it, j):\n    global tagsList\n\n    # internal tags keys\n    keys = it.keys()\n\n    for key in keys:\n        tag = it[key]\n\n        if tag['tag_type'] == 'struct':\n            structureDataType = tag['data_type']['name']\n            structureSize = tag['data_type']['template']['structure_size']\n\n            if tag['array'] > 0:\n                add_Tag(j, '- ' + key + '[' + str(tag['array']) + ']' + ' (' + structureDataType + ') ' + str(structureSize) + ' bytes' )\n            else:\n                add_Tag(j, '- ' + key + ' (' + structureDataType + ') ' + str(structureSize) + ' bytes' )\n\n            i = struct_members(tag['data_type']['internal_tags'], j + 1)\n        else:\n            if tag['data_type'] == 'BOOL':\n                add_Tag(j, '- ' + key + ' (bit ' + str(tag['bit']) + ')' + ' (' + tag['data_type'] + ')')\n            else:\n                if tag['array'] > 0:\n                    if tag['data_type'] == 'DWORD':\n                        add_Tag(j, '- ' + key + '[' + str(tag['array'] * 32) + ']' + ' (' + tag['data_type'] + ')')\n                    else:\n                        add_Tag(j, '- ' + key + '[' + str(tag['array']) + ']' + ' (' + tag['data_type'] + ')')\n                else:\n                    add_Tag(j, '- ' + key + ' (' + tag['data_type'] + ')')\n\n    return None\n\ndef add_Tag(j, string):\n    global tagsList\n\n    #insert multiple of 2 spaces, depending on the structure depth, to simulate the tree appearance\n    k = 2 * j + len(string)\n    tagsList += (' ' * k + string)[-k:] + '\\n'\n\ngetTags()",
+        "output": "str",
+        "x": 300,
+        "y": 1082,
+        "wires": [
+            [
+                "513160a2.a4c83"
+            ]
+        ]
+    },
+    {
+        "id": "a294b600.af3258",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 1082,
+        "wires": []
+    },
+    {
+        "id": "2c269696.ad4e4a",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Execute the script to fetch tags.",
+        "info": "",
+        "x": 289.0833282470703,
+        "y": 1146.75,
+        "wires": []
+    },
+    {
+        "id": "891eedbd.f0dee",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1205,
+        "wires": [
+            [
+                "a4d23c7b.4006d8"
+            ]
+        ]
+    },
+    {
+        "id": "a4d23c7b.4006d8",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "List Tags",
+        "pyfile": "tags.py",
+        "virtualenv": "envtest",
+        "continuous": false,
+        "stdInData": false,
+        "x": 426,
+        "y": 1205,
+        "wires": [
+            [
+                "c797b8c8.83279",
+                "39507c87.f6b6d4"
+            ]
+        ]
+    },
+    {
+        "id": "39507c87.f6b6d4",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 768,
+        "y": 1244,
+        "wires": []
+    },
+    {
+        "id": "c797b8c8.83279",
+        "type": "ui_template",
+        "z": "d10819f1.5cfcf8",
+        "group": "2f245282.d1a01e",
+        "name": "",
+        "order": 0,
+        "width": "6",
+        "height": "6",
+        "format": "<style>\n    #myTags {\n        min-height: 300px;\n        padding: 0;\n        white-space: pre;\n    }\n</style>\n\n<div id=\"myTags\" ng-bind=\"msg.payload\" contenteditable=\"false\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 760,
+        "y": 1205,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ccc19d0e.a7fa4",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "Create a python script file for fetching tags and save to disk.\\n Modify the IP and Processor Slot to match your PLC (pycomm3).",
+        "info": "",
+        "x": 390,
+        "y": 1009,
+        "wires": []
+    }
+]
