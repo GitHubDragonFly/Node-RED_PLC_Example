@@ -22,9 +22,8 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - List PLC tags including UDT members (using pycomm3 library)
 - Read tags and display their values in the dashboard (using pylogix library)
 - Automated or manual process for flow lines with pythonshell nodes
-
-Node-RED web browser access is generally via IP address of your device + the port (ex. 192.168.1.17:1880)
-Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
+- Node-RED web browser access is generally via IP address of your device + the port (ex. 192.168.1.17:1880)
+- Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
 
 # Usage
 - Install Node-RED, required nodes and python3
