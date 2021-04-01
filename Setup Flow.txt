@@ -178,7 +178,7 @@
         "fieldType": "msg",
         "format": "python",
         "syntax": "plain",
-        "template": "import sys\nsys.path.append('..')\n\nfrom pylogix import PLC\n\ndef read_value(tagName):\n    readValue = ''\n    response = None\n\n    comm = PLC()\n    comm.IPAddress = '192.168.1.15'\n    comm.ProcessorSlot = 3\n    comm.Micro800 = False\n\n    try:\n        response = comm.Read(tagName)\n    except:\n        pass\n\n    comm.Close()\n    \n    if not response.Value is None:\n        readValue = response.Value\n    else:\n        readValue = response.Status\n\n    print(readValue)\n\n    return readValue\n\ntag = input()\nread_value(tag)",
+        "template": "import sys\nsys.path.append('..')\n\nfrom pylogix import PLC\n\ndef read_value(tagName):\n    readValue = ''\n    response = None\n\n    comm = PLC()\n    comm.IPAddress = '192.168.1.15'\n    comm.ProcessorSlot = 3\n    comm.Micro800 = False\n\n    try:\n        response = comm.Read(tagName)\n    except:\n        pass\n\n    comm.Close()\n    \n    if not response is None:\n        if not response.Value is None:\n            readValue = response.Value\n        else:\n            readValue = response.Status\n\n    print(readValue)\n\n    return readValue\n\ntag = input()\nread_value(tag)",
         "output": "str",
         "x": 300,
         "y": 1378,
