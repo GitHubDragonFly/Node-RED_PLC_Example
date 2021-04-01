@@ -32,7 +32,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 This is all MIT licensed.
 
 # Credits
-All the credits go to Node-RED and [rodened](https://flows.nodered.org/user/rodened), the author of the original example, for making this easy work.
+All the credits go to Node-RED, its contributors and in particular [rodened](https://flows.nodered.org/user/rodened), the author of the original example, for making this easy work.
 
 # Trademarks
 Any and all trademarks, either directly or indirectly mentioned in this project, belong to their respective owners.
