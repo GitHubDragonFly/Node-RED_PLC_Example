@@ -28,7 +28,8 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Make sure to read the comments and setup correct values for your IP Address / Processor Slot (Micro800 option is for pylogix only).
 - Follow the flow from top to bottom and execute each line by using the inject button (check the outputs in the "Debug" window)
 - Optionally, automate the Device Discovery / Tag Listing by checking the "Inject once after" option of the inject node
-- Optionally, automate the Tag Reading by checking the "Inject once after" option (1, 2, 3 seconds) of the inject nodes and setting their "Repeat" option to "interval" (3, 3, 3 seconds)
+- Optionally, automate the Tag Reading by checking the "Inject once after" option (1, 2, 3 seconds respectively top to bottom) of the inject nodes and setting their "Repeat" option to "interval" (3, 3, 3 seconds respectively top to bottom)
+- More lines for tag reading can be added by following the existing pattern
 - No special folder is set for this example and all the files/folders were created in the /home/pi/ folder
 
 # License
