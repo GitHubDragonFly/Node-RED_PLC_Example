@@ -1,7 +1,7 @@
 # Node-RED PLC Example
 Node-RED web browser example of using python to communicate to Allen Bradley PLCs. Done on Raspberry Pi 2 and with [pylogix](https://github.com/dmroeder/pylogix) and [pycomm3](https://github.com/ottowayi/pycomm3) open source libraries.
 
-This is adapted version of this Node-RED pythonshell [example](https://flows.nodered.org/flow/778859ca2503db35ff0e12341508efef).
+This is adapted version of the Node-RED pythonshell [example](https://flows.nodered.org/flow/778859ca2503db35ff0e12341508efef).
 
 Required software for this example (try getting the latest versions):
 - [Node-RED](https://nodered.org)
@@ -13,7 +13,7 @@ Required additional Node-RED packages (use "Manage Palette" option from within N
 - [node-red-contrib-pythonshell](https://flows.nodered.org/node/node-red-contrib-pythonshell)
 - [node-red-contrib-ui-artless-gauge](https://flows.nodered.org/node/node-red-contrib-ui-artless-gauge)
 
-Optionally install any other Node-RED packages (like [ui_level](https://flows.nodered.org/node/node-red-contrib-ui-level), [lineargauge](https://flows.nodered.org/node/node-red-node-ui-lineargauge),...etc).
+Optionally install any other Node-RED packages (like [ui_level](https://flows.nodered.org/node/node-red-contrib-ui-level), [lineargauge](https://flows.nodered.org/node/node-red-node-ui-lineargauge), ... etc).
 
 Raspberry Pi 2 was used for this example but any other network enabled hardware, capable of running Node-RED and python3, should work as well.
 
