@@ -21,13 +21,18 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Discover Devices on the network (using pycomm3 library)
 - List PLC tags including UDT members (using pycomm3 library)
 - Read tags and display their values in the dashboard (using pylogix library)
-- Automated or manual tag reading for flow lines with pythonshell nodes
+- Automated or manual process for flow lines with pythonshell nodes
+
+Node-RED web browser access is generally via IP address of your device + the port (ex. 192.168.1.17:1880)
+Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
 
 # Usage
+- Install Node-RED, required nodes and python3
 - Copy the "Setup Flow.txt" file's content to the clipboard and import it to Node-RED
+- Make sure to read the comments and setup correct values for your IP Address / Processor Slot (Micro800 option is for pylogix only).
 - Follow the flow from top to bottom and execute each line by using the inject button (check the outputs in the "Debug" window)
-- Make sure to read the comments and setup correct values for your IP Address / Processor Slot / Micro800.
-- Optionally, automate the tag reading by setting the inject nodes "Repeat" options
+- Optionally, automate the Device Discovery / Tag Listing by checking the "Inject once after" option of the inject node
+- Optionally, automate the Tag Reading by checking the "Inject once after" option (1, 2, 3 seconds) of the inject nodes and setting their "Repeat" option to "interval" (3, 3, 3 seconds)
 - No special folder is set for this example and all the files/folders were created in the /home/pi/ folder
 
 # License
