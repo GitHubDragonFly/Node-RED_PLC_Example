@@ -1,2 +1,46 @@
-# Node-RED_PLC_Example
-Node-RED example of using python to communicate to Allen Bradley PLCs. Done on Raspberry Pi 2 and with pylogix and pycomm3 libraries.
+# Node-RED PLC Example
+Node-RED web browser example of using python to communicate to Allen Bradley PLCs. Done on Raspberry Pi 2 and with [pylogix](https://github.com/dmroeder/pylogix) and [pycomm3](https://github.com/ottowayi/pycomm3) open source libraries.
+
+This is adapted version of this Node-RED pythonshell [example](https://flows.nodered.org/flow/778859ca2503db35ff0e12341508efef).
+
+Required software for this example (try getting the latest versions):
+- [Node-RED](https://nodered.org)
+- [python3](https://www.python.org)
+- pylogix and pycomm3 will be installed by the flow (internet connection required until installed)
+
+Required additional Node-RED packages (use "Manage Palette" option from within Node-RED to install, internet connection required until installed):
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
+- [node-red-contrib-pythonshell](https://flows.nodered.org/node/node-red-contrib-pythonshell)
+- [node-red-contrib-ui-artless-gauge](https://flows.nodered.org/node/node-red-contrib-ui-artless-gauge)
+
+Optionally install any other Node-RED packages (like [ui_level](https://flows.nodered.org/node/node-red-contrib-ui-level), [lineargauge](https://flows.nodered.org/node/node-red-node-ui-lineargauge),...etc).
+
+Raspberry Pi 2 was used for this example but any other network enabled hardware, capable of running Node-RED and python3, should work as well.
+
+# Functionality
+- Discover Devices on the network (using pycomm3 library)
+- List PLC tags including UDT members (using pycomm3 library)
+- Read tags and display their values in the dashboard (using pylogix library)
+- Automated or manual tag reading
+
+# Usage
+- Copy the "Setup Flow.txt" file's content to the clipboard and import it to Node-RED
+- Follow the flow from top to bottom and execute each line by using the inject button (check the outputs in the "Debug" window)
+- No special folder is set for this example and all the files/folders were created in the /home/pi/ folder
+
+# License
+This is all MIT licensed.
+
+# Credits
+All the credits go to Node-RED and [rodened](https://flows.nodered.org/user/rodened), the author of the original example, for making this easy work.
+
+# Trademarks
+Any and all trademarks, either directly or indirectly mentioned in this project, belong to their respective owners.
+
+# Useful Resources
+Any and all other Node-RED Library nodes but some specifically PLC related packages:
+- [OpenPLC](https://flows.nodered.org/node/node-red-contrib-openplc)
+- [redPlc](https://flows.nodered.org/node/node-red-contrib-redplc)
+- [plcindustry](https://flows.nodered.org/node/plcindustry)
+- [cip-ethernet-ip](https://flows.nodered.org/node/node-red-contrib-cip-ethernet-ip)
+- [IO Simulation](https://flows.nodered.org/flow/eb24c4815ed772c244836dbbebd8e9d5)
