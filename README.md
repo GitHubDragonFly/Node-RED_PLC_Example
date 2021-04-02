@@ -25,7 +25,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
 
 # Usage
-- Install Node-RED, required nodes and python3
+- Install Node-RED, the required nodes and python3
 - Copy the "Setup Flow.txt" file's content to the clipboard and import it to Node-RED
 - Make sure to read the comments and setup correct values for your IP Address / Processor Slot (Micro800 option is for pylogix only).
 - Follow the flow from top to bottom and execute each line by using the inject button (check the outputs in the "Debug" window)
