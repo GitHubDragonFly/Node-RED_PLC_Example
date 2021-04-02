@@ -1,5 +1,5 @@
 # Node-RED PLC Example
-Node-RED web browser example of using python to communicate to Allen Bradley PLCs. Done on Raspberry Pi 2 and with [pylogix](https://github.com/dmroeder/pylogix) and [pycomm3](https://github.com/ottowayi/pycomm3) open source libraries.
+Node-RED web browser example of using python to communicate to Allen Bradley PLCs. Deployed on Raspberry Pi 2 and with [pylogix](https://github.com/dmroeder/pylogix) and [pycomm3](https://github.com/ottowayi/pycomm3) open source libraries.
 
 This is adapted version of the Node-RED pythonshell [example](https://flows.nodered.org/flow/778859ca2503db35ff0e12341508efef).
 
@@ -23,6 +23,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Automated or manual process for flow lines with pythonshell nodes
 - Node-RED web browser access is generally via IP address of your device + the port (ex. 192.168.1.17:1880)
 - Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
+- Debug nodes can be disconnected once you know that everything works
 
 # Usage
 - Install Node-RED, the required nodes and python3
