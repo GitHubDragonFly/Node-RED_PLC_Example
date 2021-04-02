@@ -132,6 +132,16 @@
         "collapse": false
     },
     {
+        "id": "6a830e8.204eaf",
+        "type": "ui_group",
+        "name": "SLC500 / MicroLogix",
+        "tab": "7809963d.05f3c8",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
         "id": "4c88e585.8e1f24",
         "type": "inject",
         "z": "d10819f1.5cfcf8",
@@ -706,7 +716,7 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "onceDelay": "3",
+        "onceDelay": "2",
         "topic": "",
         "payload": "CT_REAL",
         "payloadType": "str",
@@ -735,7 +745,7 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "onceDelay": "2",
+        "onceDelay": "3",
         "topic": "",
         "payload": "CT_INT;CT_INT.0{5};CT_BOOLArray_1[0]{7};CT_STRINGArray[0]{2}",
         "payloadType": "str",
@@ -1311,6 +1321,180 @@
         "info": "",
         "x": 390,
         "y": 1764,
+        "wires": []
+    },
+    {
+        "id": "bdab32c1.83834",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 2000,
+        "wires": [
+            [
+                "31c54499.299854"
+            ]
+        ]
+    },
+    {
+        "id": "4f8aed30.bd84ec",
+        "type": "file",
+        "z": "d10819f1.5cfcf8",
+        "name": "slcRead.py",
+        "filename": "slcRead.py",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 510,
+        "y": 2000,
+        "wires": [
+            [
+                "78b981ce.1d46f8"
+            ]
+        ]
+    },
+    {
+        "id": "31c54499.299854",
+        "type": "template",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "plain",
+        "template": "from pycomm3 import SLCDriver\n\ndef slc_read_value(tagName):\n    ip = '192.168.1.10'\n    commSLC = None\n    results = None\n    myTag = None\n    allValues = ''\n    \n    try:\n        commSLC = SLCDriver(ip)\n        commSLC.open()\n        \n        if tagName != '':\n            myTag = []\n            if ';' in tagName:\n                tags = tagName.split(';')\n                for tag in tags:\n                    if not str(tag) == '':\n                        myTag.append(str(tag))\n            else:\n                myTag.append(tagName)\n        \n        results = commSLC.read(*myTag)\n        \n        if len(myTag) == 1:\n            if myTag[0].endswith('}') and '{' in myTag[0]:\n                tempList = []\n\n                for val in results.value:\n                    if isinstance(val, str):\n                        tempList.append(str(val).strip('\\x00'))\n                    else:\n                        tempList.append(val)\n\n                allValues += str(tempList)\n            else:\n                if isinstance(results.value, str):\n                    allValues += str(results.value).strip('\\x00')\n                else:\n                    allValues += str(results.value)\n        else:\n            for tag in results:\n                if isinstance(tag.value, list):\n                    allValues += str(tag[0]) + '{' + str(len(tag.value)) + '} : '\n                \n                    tempList = []\n\n                    for val in tag.value:\n                        if isinstance(val, str):\n                            tempList.append(str(val).strip('\\x00'))\n                        else:\n                            tempList.append(val)\n\n                    allValues += str(tempList)\n                else:\n                    allValues += str(tag[0]) + ' : '\n                \n                    if isinstance(tag.value, str):\n                        allValues += str(tag.value).strip('\\x00')\n                    else:\n                        allValues += str(tag.value)\n                \n                allValues += '\\n'\n    except:\n        if not commSLC is None:\n            commSLC.close()\n            commSLC = None\n    \n    print(allValues)\n    return allValues\n\ntag = input()\nslc_read_value(tag)",
+        "output": "str",
+        "x": 300,
+        "y": 2000,
+        "wires": [
+            [
+                "4f8aed30.bd84ec"
+            ]
+        ]
+    },
+    {
+        "id": "6bbdaa82.004f8c",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "SLC500 / MicroLogix\\n Create a python script file for reading tags and save to disk.\\n Modify the IP to match your PLC (pycomm3).",
+        "info": "",
+        "x": 370,
+        "y": 1924,
+        "wires": []
+    },
+    {
+        "id": "78b981ce.1d46f8",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "65ca71bd.c01f58",
+        "type": "inject",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "4",
+        "topic": "",
+        "payload": "N7:0{3};ST9:0{2};B3:0{3};B3:0/0",
+        "payloadType": "str",
+        "x": 90,
+        "y": 2132,
+        "wires": [
+            [
+                "e2d56044.8b9748"
+            ]
+        ]
+    },
+    {
+        "id": "e2d56044.8b9748",
+        "type": "pythonshell in",
+        "z": "d10819f1.5cfcf8",
+        "name": "Read SLC Tag",
+        "pyfile": "slcRead.py",
+        "virtualenv": "envtest",
+        "continuous": true,
+        "stdInData": true,
+        "x": 425,
+        "y": 2132,
+        "wires": [
+            [
+                "971afab4.f57f78",
+                "59b12815.c214f8"
+            ]
+        ]
+    },
+    {
+        "id": "59b12815.c214f8",
+        "type": "debug",
+        "z": "d10819f1.5cfcf8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 769,
+        "y": 2172,
+        "wires": []
+    },
+    {
+        "id": "971afab4.f57f78",
+        "type": "ui_template",
+        "z": "d10819f1.5cfcf8",
+        "group": "6a830e8.204eaf",
+        "name": "",
+        "order": 2,
+        "width": "6",
+        "height": "11",
+        "format": "<style>\n    #mySLCArrayTags {\n        min-height: 300px;\n        padding: 0;\n        white-space: pre;\n    }\n</style>\n\n<div id=\"mySLCArrayTags\" ng-bind=\"msg.payload\" contenteditable=\"false\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 758,
+        "y": 2133,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44d60037.fbb308",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "This line is currently set to inject array of SLC tags to the python script.\\n Optionally, automate injection with the 'Inject once after' and Repeat.",
+        "info": "",
+        "x": 410,
+        "y": 2070,
         "wires": []
     }
 ]
