@@ -16,8 +16,9 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 
 # Functionality
 - Discover Devices on the network (this is using pycomm3 library)
-- List PLC tags including UDT members (this is using pycomm3 library)
-- Read tags and display their values in the dashboard (this is using pylogix library)
+- List ControlLogix PLC tags including UDT members (this is using pycomm3 library)
+- Read ControlLogix tags and display their values in the dashboard (this is using pylogix library)
+- Read SLC500/MicroLogix tags and display their values in the dashboard (this is using pycomm3 library)
 - Tags can be entered either as a single (ex: CT_DINT) or multiple semicolon separated mixed tags (ex: CT_DINT; CT_REAL; CT_3D_DINTArray[0,3,1]{5})
 - Reading multiple elements of an array requires the following tag format: tagName[startIndex]{elementCount}, where 'startIndex' is the starting array index (x or x,y or x,y,z) and 'elementCount' is the number of consecutive elements to read. Example: CT_REALArray[0]{15} or CT_DINTArray[0,1,0]{7}
 - Automated or manual process for flow lines with pythonshell nodes
@@ -33,6 +34,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Optionally, automate the Device Discovery / Tag Listing by checking the "Inject once after" option of the inject node
 - Optionally, automate the Tag Reading by checking the "Inject once after" option (1, 2, 3 seconds respectively top to bottom) of the inject nodes and setting their "Repeat" option to "interval" (3, 3, 3 seconds respectively top to bottom)
 - More lines for tag reading can be added by following the existing pattern
+- You can also remove whatever you want from the flow
 - No special folder is set for this example and all the files/folders were created in the /home/pi/ folder
 
 # License
