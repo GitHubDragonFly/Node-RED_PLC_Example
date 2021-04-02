@@ -178,7 +178,7 @@
         "fieldType": "msg",
         "format": "python",
         "syntax": "plain",
-        "template": "import sys\nsys.path.append('..')\n\nfrom pylogix import PLC\n\ndef read_value(tagName):\n    readValue = ''\n    response = None\n\n    comm = PLC()\n    comm.IPAddress = '192.168.1.15'\n    comm.ProcessorSlot = 3\n    comm.Micro800 = False\n\n    try:\n        response = comm.Read(tagName)\n    except:\n        pass\n\n    comm.Close()\n    \n    if not response is None:\n        if not response.Value is None:\n            readValue = response.Value\n        else:\n            readValue = response.Status\n\n    print(readValue)\n\n    return readValue\n\ntag = input()\nread_value(tag)",
+        "template": "import sys\nsys.path.append('..')\n\nfrom pylogix import PLC\n\ndef read_value(tagName):\n    allValues = ''\n    response = None\n    regularTags = []\n    arrayTags = dict()\n    arrayElementCount = 0\n    boolDisplayOneZero = True\n\n    comm = PLC()\n    comm.IPAddress = '192.168.1.15'\n    comm.ProcessorSlot = 3\n    comm.Micro800 = False\n\n    if ';' in tagName:\n        tags = tagName.split(';')\n        for tag in tags:\n            t = str(tag)\n\n            if not t == '':\n                if t.endswith('}') and '{' in t: # 1 or 2 or 3 dimensional array tag\n                    try:\n                        arrayElementCount = int(t[t.index('{') + 1:t.index('}')])\n                        if arrayElementCount < 2:\n                            regularTags.append(t[:t.index('{')])\n                        else:\n                            t = t[:t.index('{')]\n                            arrayTags.update( {t : arrayElementCount} )\n                    except:\n                        regularTags.append(t[:t.index('{')])\n                else:\n                    regularTags.append(t)\n    elif tagName.endswith('}') and '{' in tagName: # 1 or 2 or 3 dimensional array tag\n        try:\n            arrayElementCount = int(tagName[tagName.index('{') + 1:tagName.index('}')])\n\n            if arrayElementCount < 2:\n                regularTags.append(tagName[:tagName.index('{')])\n            else:\n                arrayTags.update( {tagName[:tagName.index('{')] : arrayElementCount} )\n        except:\n            regularTags.append(tagName[:tagName.index('{')])\n    else:\n        response = comm.Read(tagName)\n\n    if len(regularTags) > 0:\n        response = comm.Read(regularTags)\n\n        if not response[0].Value is None:\n            for i in range(0, len(response)):\n                allValues += response[i].TagName + ' : '\n\n                if (boolDisplayOneZero) and (str(response[i].Value) == 'True' or str(response[i].Value) == 'False'):\n                    allValues += '1, ' if str(response[i].Value) == 'True' else '0, '\n                else:\n                    if str(response[i].Value) == '':\n                        allValues += '{}, '\n                    else:\n                        allValues += str(response[i].Value)\n\n                allValues += '\\n'\n\n    if len(arrayTags) > 0:\n        for tg in arrayTags:\n            response = comm.Read(tg, arrayTags[tg])\n\n            if not response.Value is None:\n                allValues += response.TagName + '{' + str(len(response.Value)) + '}' + ' : '\n\n                if (boolDisplayOneZero) and (str(response.Value[0]) == 'True' or str(response.Value[0]) == 'False'):\n                    newBoolArray = []\n                    for val in range(0, len(response.Value)):\n                        newBoolArray.append(1 if str(response.Value[val]) == 'True' else 0)\n\n                    allValues += str(newBoolArray)\n                else:\n                    allValues += str(response.Value)\n\n                allValues += '\\n'\n\n    comm.Close()\n    \n    if allValues == '':\n        if not response is None:\n            if not response.Value is None:\n                print(response.Value)\n                return response.Value\n    else:\n        print(allValues)\n        return allValues\n\ntag = input()\nread_value(tag)",
         "output": "str",
         "x": 300,
         "y": 1378,
@@ -711,7 +711,7 @@
         "payload": "CT_REAL",
         "payloadType": "str",
         "x": 100,
-        "y": 1767,
+        "y": 1669,
         "wires": [
             [
                 "9cb6db27.08f0f"
@@ -737,10 +737,10 @@
         "once": false,
         "onceDelay": "2",
         "topic": "",
-        "payload": "CT_STRING",
+        "payload": "CT_INT;CT_INT.0{5};CT_BOOLArray_1[0]{7};CT_STRINGArray[0]{2}",
         "payloadType": "str",
-        "x": 110,
-        "y": 1667,
+        "x": 90,
+        "y": 1809,
         "wires": [
             [
                 "6de6adb.56fb0d4"
@@ -773,7 +773,7 @@
         "continuous": true,
         "stdInData": true,
         "x": 423,
-        "y": 1767,
+        "y": 1669,
         "wires": [
             [
                 "73e0f96f.ef1fb8",
@@ -791,29 +791,13 @@
         "continuous": true,
         "stdInData": true,
         "x": 421,
-        "y": 1667,
+        "y": 1809,
         "wires": [
             [
-                "f76374d2.33c5c8",
+                "34f05ff4.8c925",
                 "ea88923.28052f"
             ]
         ]
-    },
-    {
-        "id": "f76374d2.33c5c8",
-        "type": "ui_text",
-        "z": "d10819f1.5cfcf8",
-        "group": "4678729b.3b0a8c",
-        "order": 0,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "CT_STRING = ",
-        "format": "{{msg.payload}}",
-        "layout": "row-center",
-        "x": 779,
-        "y": 1667,
-        "wires": []
     },
     {
         "id": "73e0f96f.ef1fb8",
@@ -838,7 +822,7 @@
         "seg1": "",
         "seg2": "",
         "x": 761,
-        "y": 1767,
+        "y": 1669,
         "wires": []
     },
     {
@@ -932,7 +916,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 769,
-        "y": 1707,
+        "y": 1849,
         "wires": []
     },
     {
@@ -948,7 +932,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 769,
-        "y": 1807,
+        "y": 1709,
         "wires": []
     },
     {
@@ -1277,7 +1261,7 @@
         "name": "",
         "order": 0,
         "width": "6",
-        "height": "6",
+        "height": "7",
         "format": "<style>\n    #myTags {\n        min-height: 300px;\n        padding: 0;\n        white-space: pre;\n    }\n</style>\n\n<div id=\"myTags\" ng-bind=\"msg.payload\" contenteditable=\"false\"></div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
@@ -1297,6 +1281,36 @@
         "info": "",
         "x": 390,
         "y": 1009,
+        "wires": []
+    },
+    {
+        "id": "34f05ff4.8c925",
+        "type": "ui_template",
+        "z": "d10819f1.5cfcf8",
+        "group": "4678729b.3b0a8c",
+        "name": "",
+        "order": 2,
+        "width": "6",
+        "height": "2",
+        "format": "<style>\n    #myArrayTags {\n        min-height: 300px;\n        padding: 0;\n        white-space: pre;\n    }\n</style>\n\n<div id=\"myArrayTags\" ng-bind=\"msg.payload\" contenteditable=\"false\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 758,
+        "y": 1810,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2160da05.340426",
+        "type": "comment",
+        "z": "d10819f1.5cfcf8",
+        "name": "This line is currently set to inject array of tags to the python script.",
+        "info": "",
+        "x": 390,
+        "y": 1764,
         "wires": []
     }
 ]
