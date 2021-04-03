@@ -5,6 +5,7 @@ This is adapted version of the Node-RED pythonshell [example](https://flows.node
 
 Required software for this example (try getting the latest versions):
 - [Node-RED](https://nodered.org) and [python3](https://www.python.org)
+- On Debian/Ubuntu systems, you might need to install python3-venv package
 - pylogix and pycomm3 will be installed by the flow (internet connection will be required until installed)
 
 Required additional Node-RED packages (use "Manage Palette" option from within Node-RED to install, internet connection required until installed):
