@@ -22,7 +22,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Read SLC500 / MicroLogix tags and display their values in the dashboard (this is using pycomm3 library)
 - Tags can be entered either as a single (ex: CT_DINT) or multiple semicolon separated mixed tags (ex: CT_DINT; CT_REAL; CT_3D_DINTArray[0,3,1]{5})
 - Reading multiple elements of an array requires the following tag format: tagName[startIndex]{elementCount}, where 'startIndex' is the starting array index (x or x,y or x,y,z) and 'elementCount' is the number of consecutive elements to read. Example: CT_REALArray[0]{15} or CT_DINTArray[0,1,0]{7}
-- The above tag rules are also generally applicable to SLC500/MicroLogix (ex. N7:0 or N7:0{3})
+- The above tag rules are also generally applicable to SLC500 / MicroLogix (ex. N7:0 or N7:0{3})
 - Automated or manual process for flow lines with pythonshell nodes
 - Node-RED web browser access is generally via IP address of your device + the port (ex. 192.168.1.17:1880)
 - Node-RED Dashboard web browser access is generally via IP address of your device + the port + ui (ex. 192.168.1.17:1880/ui)
