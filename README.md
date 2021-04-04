@@ -32,7 +32,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - Install Node-RED, the required nodes and python3
 - Copy the "Setup Flow.txt" file's content to the clipboard and import it to Node-RED
 - Make sure to read the comments and setup correct values for your IP Address / Processor Slot (Micro800 option is for pylogix only).
-- Follow the flow from top to bottom and execute each line by using the inject button (check the output of the current line in the "Debug" window before proceeding to the next line)
+- Follow the flow from top to bottom and execute each line by using the inject button. The indicator of success or failure of each step will be in the "Debug" window. Exercise patience before proceeding to the next line, especially while pylogix/pycomm3 packages are being installed since it might take a little while.
 - Optionally, automate the Device Discovery / Tag Listing by checking the "Inject once after" option of the inject node
 - Optionally, automate the Tag Reading by checking the "Inject once after" option (1, 2, 3 seconds respectively top to bottom) of the inject nodes and setting their "Repeat" option to "interval" (3, 3, 3 seconds respectively top to bottom)
 - More lines for tag reading can be added by following the existing pattern
