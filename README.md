@@ -38,7 +38,7 @@ Raspberry Pi 2 was used for this example but any other network enabled hardware,
 - More lines for tag reading can be added by following the existing pattern.
 - You can also remove whatever you want from the flow (like SLC500 / MicroLogix section if you don't need it).
 - You can also convert the flow to only use either SLC500 / MicroLogix or ControlLogix / Micro800.
-- No special folder is set for this example and all the files/folders were created in the /home/pi/ folder.
+- No special folder is set for this example and all the files/folders were created in the /home/pi/ folder. Any permission issues you might encounter would require that you set correct permissions on the folder you want to create/use.
 - After you make any changes to the flow then you will have to click the "Deploy" button.
 
 # License
