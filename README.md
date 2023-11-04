@@ -15,6 +15,10 @@ Optionally install any other Node-RED packages (like [ui_level](https://flows.no
 
 Raspberry Pi 2 was used for this example but any other network enabled hardware, capable of running Node-RED and python3, should work as well.
 
+# Node-RED Dashboard Screenshot
+
+![Node-RED Dashboard](screenshots/Node-RED%203.png?raw=true)
+
 # Functionality
 - Discover Devices on the network (this is using pycomm3 library).
 - List ControlLogix PLC tags including UDT members (this is using pycomm3 library).
