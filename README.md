@@ -15,8 +15,15 @@ Optionally install any other Node-RED packages (like [ui_level](https://flows.no
 
 Raspberry Pi 2 was used for this example but any other network enabled hardware, capable of running Node-RED and python3, should work as well.
 
-# Node-RED Dashboard Screenshot
+# Node-RED Screenshots
 
+Setup Flow
+![Node-RED Dashboard](screenshots/Node-RED%201.png?raw=true)
+
+Dashboard 1
+![Node-RED Dashboard](screenshots/Node-RED%202.png?raw=true)
+
+Dashboard 2
 ![Node-RED Dashboard](screenshots/Node-RED%203.png?raw=true)
 
 # Functionality
