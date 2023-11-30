@@ -33,9 +33,9 @@ Dashboard 2
 - List ControlLogix PLC tags including UDT members (this is using `pycomm3` library).
 - Read ControlLogix tags and display their values in the dashboard (this is using `pylogix` library).
 - Read SLC500 / MicroLogix tags and display their values in the dashboard (this is using `pycomm3` library).
-- Tags can be entered either as a single (ex: CT_DINT) or multiple semicolon separated mixed tags (ex: CT_DINT; CT_REAL; CT_3D_DINTArray[0,3,1]{5}).
+- Tags can be entered either as a single, ex: `CT_DINT`, or multiple semicolon separated mixed tags, ex: `CT_DINT; CT_REAL; CT_3D_DINTArray[0,3,1]{5}`.
 - Reading multiple elements of an array requires the following tag format:
-- - `tagName[startIndex]{elementCount}`:
+  - `tagName[startIndex]{elementCount}`:
     - `tagName` should be the correct name of the tag as it is in your PLC program, a name like CT_DINT or CT_REALArray
     - `startIndex` is the starting array index - [x] or [x,y] or [x,y,z]
     - `elementCount` is the number of consecutive elements to read, ex: CT_REALArray[0]{15} or CT_DINTArray[0,1,0]{7}.
