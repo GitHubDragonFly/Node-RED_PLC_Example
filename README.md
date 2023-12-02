@@ -73,5 +73,7 @@ Some Node-RED Library nodes specifically related to PLCs:
 - [OpenPLC](https://flows.nodered.org/node/node-red-contrib-openplc)
 - [redPlc](https://flows.nodered.org/node/node-red-contrib-redplc)
 - [plcindustry](https://flows.nodered.org/node/plcindustry)
-- [cip-ethernet-ip](https://flows.nodered.org/node/node-red-contrib-cip-ethernet-ip)
 - [IO Simulation](https://flows.nodered.org/flow/eb24c4815ed772c244836dbbebd8e9d5)
+- [cip-ethernet-ip](https://flows.nodered.org/node/node-red-contrib-cip-ethernet-ip)
+  - you can also find it [on GitHub](https://github.com/st-one-io/node-red-contrib-cip-ethernet-ip)
+  - some insights from the [AdvancedHMI Forum](https://www.advancedhmi.com/forum/index.php?topic=3268.0) topic
